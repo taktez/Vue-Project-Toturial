@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html dir="rtl"><head>
+    <title>پروژه کارنامه</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Sahel/Sahel.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        body {
+            font-family: Sahel;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1 class="my-5">کارنامه با ویو جی‌اس / VueJs</h1>
+            <table class="table table-bordered mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">درس / Lesson</th>
+                        <th scope="col">نمره / Score</th>
+                        <th scope="col">حذف / Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="course, index in courses">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{ course.title }} </td>
+                        <td>{{ course.mark }}</td>
+                        <td>
+                            <button @click="delCourse(index)" class="btn btn-outline-danger border-0">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">معدل / GPA</th>
+                        <td colspan="3">{{totalMark}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row mt-5" style="max-width: 600px;">
+                <div class="col">
+                    <input type="text" placeholder="نام درس / Name of Cours" class="form-control" v-model="courseTitle">
+                </div>
+                <div class="col">
+                    <input type="number" placeholder="نمره / Score" class="form-control" v-model="courseMark">
+                </div>
+                <div class="col">
+                    <button @click="addCourse"  class="btn btn-primary">افزودن / Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+        let app = new Vue({
+            el: '#app',
+            data: {
+                courses:[
+                {title:'django' , mark:16},
+                {title:'javascript' , mark:14},
+                ],
+                courseTitle: "",
+                courseMark: "",
+            },
+            methods: {
+                addCourse(){
+                	if (this.courseTitle) {
+                		this.courses.push({title: this.courseTitle, mark:parseInt(this.courseMark)})
+                	}
+                    
+                },
+                delCourse(index){
+                	this.courses.splice(index ,1)
+                },
+            },
+            computed:{
+            	totalMark(){
+            	let total = 0
+            	for (var i = this.courses.length - 1; i >= 0; i--) {
+            		total += this.courses[i].mark
+            	}
+            	return (total/this.courses.length).toFixed(2)
+            	}
+            }
+        })
+    </script>
+</body>
+</html>
