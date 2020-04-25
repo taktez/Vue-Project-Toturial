@@ -73,7 +73,8 @@
                 	if (this.courseTitle) {
                 		this.courses.push({title: this.courseTitle, mark:parseInt(this.courseMark)})
                 	}
-                    
+                    this.courseTitle = ""
+                    this.courseMark= ""
                 },
                 delCourse(index){
                 	this.courses.splice(index ,1)
